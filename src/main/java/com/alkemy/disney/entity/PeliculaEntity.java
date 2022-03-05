@@ -1,4 +1,4 @@
-package com.alkemy.disney.Entity;
+package com.alkemy.disney.entity;
 
 
 import lombok.Getter;
@@ -30,7 +30,7 @@ public class PeliculaEntity {
 
     private int calificacion;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "genero_id",insertable = false,updatable = false)
     private GeneroEntity genero;
 

@@ -1,4 +1,4 @@
-package com.alkemy.disney.Entity;
+package com.alkemy.disney.entity;
 
 
 
