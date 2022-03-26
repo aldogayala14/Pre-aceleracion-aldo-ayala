@@ -27,4 +27,10 @@ public class MovieCharacterController {
         MovieCharacterDTO characterSaved = movieCharacterService.save(movieCharacterDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(characterSaved);
     }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        movieCharacterService.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }

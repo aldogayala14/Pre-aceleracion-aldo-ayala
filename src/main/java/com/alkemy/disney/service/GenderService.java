@@ -9,4 +9,6 @@ public interface GenderService {
     GenderDTO save(GenderDTO dto);
 
     List<GenderDTO> getAllGenders();
+
+    void delete(Long id);
 }

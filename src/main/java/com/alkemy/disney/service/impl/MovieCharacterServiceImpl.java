@@ -22,7 +22,7 @@ public class MovieCharacterServiceImpl implements MovieCharacterService {
     public MovieCharacterDTO save(MovieCharacterDTO movieCharacterDTO) {
         MovieCharacterEntity entity = movieCharacterMapper.characterDTO2Entity(movieCharacterDTO);
         MovieCharacterEntity characterSaved = movieCharacterRepository.save(entity);
-        MovieCharacterDTO result = movieCharacterMapper.characterEntity2DTO(characterSaved);
+        MovieCharacterDTO result = movieCharacterMapper.characterEntity2DTO(characterSaved,true);
         return result;
     }
 
@@ -34,7 +34,7 @@ public class MovieCharacterServiceImpl implements MovieCharacterService {
     @Override
     public List<MovieCharacterDTO> getAllCharacters() {
        List<MovieCharacterEntity> entities = movieCharacterRepository.findAll();
-       List<MovieCharacterDTO> result = movieCharacterMapper.characterEntity2DTOList(entities);
+       List<MovieCharacterDTO> result = movieCharacterMapper.characterEntity2DTOList(entities, true);
        return result;
     }
 

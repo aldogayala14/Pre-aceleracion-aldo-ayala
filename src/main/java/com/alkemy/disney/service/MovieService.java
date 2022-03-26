@@ -4,6 +4,7 @@ import com.alkemy.disney.dto.MovieBasicDTO;
 import com.alkemy.disney.dto.MovieDTO;
 
 import java.util.List;
+import java.util.Set;
 
 public interface MovieService {
 
@@ -20,4 +21,6 @@ public interface MovieService {
     void addCharacter(Long id, Long idCharacter);
 
     void removeCharacter(Long id, Long idCharacter);
+
+    List<MovieDTO> getByFilters(String name, String date, Set<Long> characters, String order);
 }

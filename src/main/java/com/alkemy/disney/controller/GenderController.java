@@ -29,4 +29,11 @@ public class GenderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(genderSaved);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        genderService.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+
 }

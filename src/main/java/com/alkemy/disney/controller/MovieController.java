@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("movies")
@@ -29,11 +31,23 @@ public class MovieController {
         return ResponseEntity.ok().body(movie);
     }
 
+    @GetMapping
+    public ResponseEntity<List<MovieDTO>> getDetailsByFilters(@RequestParam(required = false) String name,
+                                                              @RequestParam(required = false) String date,
+                                                              @RequestParam(required = false) Set<Long> characters,
+                                                              @RequestParam(required = false , defaultValue = "ASC") String order)
+    {
+        List<MovieDTO> movieDTOS = movieService.getByFilters(name,date,characters,order);
+        return ResponseEntity.ok(movieDTOS);
+
+    }
+
     @PostMapping
-    public ResponseEntity<MovieDTO> save(@RequestBody MovieDTO movieDTO){
+    public ResponseEntity<MovieDTO> save(@Valid @RequestBody MovieDTO movieDTO){
        MovieDTO movieSaved = movieService.save(movieDTO);
        return ResponseEntity.status(HttpStatus.CREATED).body(movieSaved);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){

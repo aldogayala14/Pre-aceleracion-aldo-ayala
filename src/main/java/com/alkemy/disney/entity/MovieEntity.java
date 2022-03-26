@@ -9,7 +9,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -52,7 +54,7 @@ public class MovieEntity {
         name = "character_movie",
         joinColumns = @JoinColumn (name = "movie_id"),
         inverseJoinColumns =@JoinColumn(name = "character_id"))
-    private Set<MovieCharacterEntity> characters = new HashSet<>();
+    private List<MovieCharacterEntity> characters = new ArrayList<>();
 
     private boolean deleted = Boolean.FALSE;
 

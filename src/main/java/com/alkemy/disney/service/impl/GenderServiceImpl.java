@@ -21,8 +21,8 @@ public class GenderServiceImpl implements GenderService {
     @Override
     public GenderDTO save(GenderDTO dto) {
         GenderEntity entity = genderMapper.genderDTO2Entity(dto);
-        GenderEntity generoSaved = genderRepository.save(entity);
-        GenderDTO result = genderMapper.genderEntity2DTO(generoSaved);
+        GenderEntity genderSaved = genderRepository.save(entity);
+        GenderDTO result = genderMapper.genderEntity2DTO(genderSaved);
         return result;
     }
 
@@ -31,5 +31,10 @@ public class GenderServiceImpl implements GenderService {
         List<GenderEntity> entities = genderRepository.findAll();
         List<GenderDTO> result = genderMapper.genderEntity2DTOList(entities);
         return result;
+    }
+
+    @Override
+    public void delete(Long id) {
+        genderRepository.deleteById(id);
     }
 }
