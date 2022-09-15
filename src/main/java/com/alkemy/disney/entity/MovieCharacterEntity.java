@@ -17,17 +17,16 @@ import java.util.List;
 @Table(name = "movie_character")
 @Getter
 @Setter
-@SQLDelete(sql = "UPDATE character SET deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE movie_character SET deleted = true WHERE id=?")
 @Where(clause = "deleted = false")
 public class MovieCharacterEntity {
 
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @NonNull
     private Long id;
 
-    @NonNull
+
     private String image;
     private String name;
     private int age;

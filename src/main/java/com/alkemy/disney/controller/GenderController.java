@@ -2,12 +2,14 @@ package com.alkemy.disney.controller;
 
 
 import com.alkemy.disney.dto.GenderDTO;
+import com.alkemy.disney.dto.MovieDTO;
 import com.alkemy.disney.service.GenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -24,7 +26,7 @@ public class GenderController {
     }
 
     @PostMapping
-    public ResponseEntity<GenderDTO> save(@RequestBody GenderDTO genderDTO){
+    public ResponseEntity<GenderDTO> save(@Valid @RequestBody GenderDTO genderDTO){
         GenderDTO genderSaved = genderService.save(genderDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(genderSaved);
     }
@@ -34,6 +36,14 @@ public class GenderController {
         genderService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<GenderDTO> update(@PathVariable Long id,@Valid @RequestBody GenderDTO genderDTO){
+        GenderDTO result = genderService.update(id,genderDTO);
+        return ResponseEntity.ok().body(result);
+    }
+
+
 
 
 }

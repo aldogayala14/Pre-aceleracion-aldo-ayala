@@ -17,6 +17,5 @@ public class MovieDTO {
     private String creationDate;
     private int qualification;
     private Long genderId;
-    private GenderDTO gender;
     private List<MovieCharacterDTO> characters;
 }

@@ -2,16 +2,12 @@ package com.alkemy.disney.repository.specification;
 
 
 import com.alkemy.disney.dto.MovieFilterDTO;
-import com.alkemy.disney.entity.MovieCharacterEntity;
 import com.alkemy.disney.entity.MovieEntity;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.JoinType;
+
 import javax.persistence.criteria.Predicate;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -45,11 +41,11 @@ public class MovieSpecification {
                 );
             }
 
-            if(!CollectionUtils.isEmpty(filterDTO.getCharacters())){
-                Join<MovieCharacterEntity, MovieEntity> join = root.join("characters", JoinType.INNER);
-                Expression<String> charactersId = join.get("id");
-                predicates.add(charactersId.in(filterDTO.getCharacters()));
-
+            if (StringUtils.hasLength(filterDTO.getIdGender())) {
+                String gender = filterDTO.getIdGender();
+                predicates.add(
+                        criteriaBuilder.equal(root.<Long>get("genderId"),gender)
+                );
             }
 
             //Remove duplicates

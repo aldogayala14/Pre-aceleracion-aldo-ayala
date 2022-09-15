@@ -34,10 +34,10 @@ public class MovieController {
     @GetMapping
     public ResponseEntity<List<MovieDTO>> getDetailsByFilters(@RequestParam(required = false) String name,
                                                               @RequestParam(required = false) String date,
-                                                              @RequestParam(required = false) Set<Long> characters,
+                                                              @RequestParam(required = false) String gender,
                                                               @RequestParam(required = false , defaultValue = "ASC") String order)
     {
-        List<MovieDTO> movieDTOS = movieService.getByFilters(name,date,characters,order);
+        List<MovieDTO> movieDTOS = movieService.getByFilters(name,date,gender,order);
         return ResponseEntity.ok(movieDTOS);
 
     }
@@ -56,7 +56,7 @@ public class MovieController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MovieDTO> update(@PathVariable Long id, @RequestBody MovieDTO movieDTO){
+    public ResponseEntity<MovieDTO> update(@PathVariable Long id,@Valid @RequestBody MovieDTO movieDTO){
         MovieDTO result = movieService.update(id,movieDTO);
         return ResponseEntity.ok().body(result);
     }

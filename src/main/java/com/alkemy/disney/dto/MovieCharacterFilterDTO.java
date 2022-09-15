@@ -7,21 +7,24 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class MovieFilterDTO {
+public class MovieCharacterFilterDTO {
+
     private String name;
-    private String date;
-    private String idGender;
+    private String age;
+    private String weight;
+    private Set<Long> movies;
     private String order;
 
-
-    public MovieFilterDTO(String name, String date, String idGender, String order) {
+    public MovieCharacterFilterDTO(String name, String age, String weight, Set<Long> movies, String order) {
         this.name = name;
-        this.date = date;
-        this.idGender = idGender;
+        this.age = age;
+        this.weight = weight;
+        this.movies = movies;
         this.order = order;
     }
 
     public boolean isASC(){return this.order.compareToIgnoreCase("ASC") == 0;}
 
     public boolean isDESC(){return this.order.compareToIgnoreCase("DESC") == 0;}
+    
 }

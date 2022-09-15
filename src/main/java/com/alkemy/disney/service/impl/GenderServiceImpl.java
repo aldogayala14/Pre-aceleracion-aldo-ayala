@@ -37,4 +37,14 @@ public class GenderServiceImpl implements GenderService {
     public void delete(Long id) {
         genderRepository.deleteById(id);
     }
+
+    @Override
+    public GenderDTO update(Long id, GenderDTO genderDTO) {
+        GenderEntity entity = genderRepository.findById(id).orElse(null);
+        entity.setImage(genderDTO.getImage());
+        entity.setName(genderDTO.getName());
+        GenderEntity entitySave = genderRepository.save(entity);
+        GenderDTO result = genderMapper.genderEntity2DTO(entitySave);
+        return  result;
+    }
 }

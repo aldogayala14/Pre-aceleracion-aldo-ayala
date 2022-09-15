@@ -3,6 +3,7 @@ package com.alkemy.disney.mapper;
 import com.alkemy.disney.dto.MovieBasicDTO;
 import com.alkemy.disney.dto.MovieCharacterDTO;
 import com.alkemy.disney.dto.MovieDTO;
+import com.alkemy.disney.entity.MovieCharacterEntity;
 import com.alkemy.disney.entity.MovieEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -27,12 +28,16 @@ public class MovieMapper {
         this.movieCharacterMapper = movieCharacterMapper;
     }
 
-    public MovieEntity movieDTO2Entity(MovieDTO movieDTO){
+    public MovieEntity movieDTO2Entity(MovieDTO movieDTO, boolean loadCharacters){
         MovieEntity movieEntity = new MovieEntity();
         movieEntity.setImage(movieDTO.getImage());
         movieEntity.setTitle(movieDTO.getTitle());
         movieEntity.setQualification(movieDTO.getQualification());
         movieEntity.setCreationDate(this.string2LocalDate(movieDTO.getCreationDate()));
+        // TODO: condicional if load characters
+        if(loadCharacters){
+            movieEntity.setCharacters(this.movieCharacterMapper.charactersDTO2Entity(movieDTO.getCharacters(),true));
+        }
         movieEntity.setGenderId(movieDTO.getGenderId());
         return movieEntity;
     }
@@ -46,7 +51,7 @@ public class MovieMapper {
         movieDTO.setImage(movieEntity.getImage());
         movieDTO.setGenderId(movieEntity.getGenderId());
         if(loadCharacters){
-            List<MovieCharacterDTO> characterDTOS = this.movieCharacterMapper.characterEntity2DTOList(movieEntity.getCharacters(),false);
+            List<MovieCharacterDTO> characterDTOS = this.movieCharacterMapper.charactersEntity2DTOList(movieEntity.getCharacters(),false);
             movieDTO.setCharacters(characterDTOS);
         }
         return movieDTO;
@@ -58,6 +63,16 @@ public class MovieMapper {
             dtos.add(this.movieEntity2DTO(entity, loadCharacters));
         }
         return dtos;
+    }
+
+
+    public List<MovieEntity>  movieDTO2EntityList(List<MovieDTO> dtos, boolean loadCharacters){
+        List<MovieEntity> entities = new ArrayList<>();
+        for(MovieDTO dto : dtos){
+            entities.add(this.movieDTO2Entity(dto,loadCharacters));
+        }
+
+        return  entities;
     }
 
     //Basic DTOS

@@ -11,4 +11,6 @@ public interface GenderService {
     List<GenderDTO> getAllGenders();
 
     void delete(Long id);
+
+    GenderDTO update(Long id, GenderDTO genderDTO);
 }

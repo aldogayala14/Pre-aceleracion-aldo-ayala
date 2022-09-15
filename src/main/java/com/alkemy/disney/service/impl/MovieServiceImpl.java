@@ -45,7 +45,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public MovieDTO save(MovieDTO movieDTO) {
-        MovieEntity entity = movieMapper.movieDTO2Entity(movieDTO);
+        MovieEntity entity = movieMapper.movieDTO2Entity(movieDTO,true);
         MovieEntity movieSaved = movieRepository.save(entity);
         MovieDTO result = movieMapper.movieEntity2DTO(movieSaved,true);
         return result;
@@ -72,11 +72,19 @@ public class MovieServiceImpl implements MovieService {
     //Delete Movie
     @Override
     public void delete(Long id) {
-       this.movieRepository.deleteById(id);
+        Optional<MovieEntity> movie = movieRepository.findById(id);
+        if(!movie.isPresent()){
+            throw new ParamNotFound("Id movie not valid");
+        }
+        this.movieRepository.deleteById(id);
     }
 
     @Override
     public MovieDTO update(Long id, MovieDTO movieDTO) {
+        Optional<MovieEntity> movie = movieRepository.findById(id);
+        if(!movie.isPresent()){
+            throw new ParamNotFound("Id movie not valid");
+        }
         MovieEntity entity = movieRepository.findById(id).orElse(null);
         entity.setImage(movieDTO.getImage());
         entity.setTitle(movieDTO.getTitle());
@@ -84,7 +92,6 @@ public class MovieServiceImpl implements MovieService {
         entity.setQualification(movieDTO.getQualification());
         MovieEntity entitySaved = movieRepository.save(entity);
         MovieDTO result = movieMapper.movieEntity2DTO(entitySaved,true);
-       // entity.set
         return result;
     }
 
@@ -108,8 +115,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<MovieDTO> getByFilters(String name, String date, Set<Long> characters, String order) {
-        MovieFilterDTO movieFilterDTO = new MovieFilterDTO(name,date,characters,order);
+    public List<MovieDTO> getByFilters(String name, String date, String idGender, String order) {
+        MovieFilterDTO movieFilterDTO = new MovieFilterDTO(name,date,idGender,order);
         List<MovieEntity> entities = movieRepository.findAll(movieSpecification.getByFilters(movieFilterDTO));
         List<MovieDTO> movieDTOS = movieMapper.movieEntity2DTOList(entities,true);
         return movieDTOS;

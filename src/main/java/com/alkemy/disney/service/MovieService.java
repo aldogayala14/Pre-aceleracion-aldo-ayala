@@ -22,5 +22,5 @@ public interface MovieService {
 
     void removeCharacter(Long id, Long idCharacter);
 
-    List<MovieDTO> getByFilters(String name, String date, Set<Long> characters, String order);
+    List<MovieDTO> getByFilters(String name, String date, String idGender, String order);
 }
